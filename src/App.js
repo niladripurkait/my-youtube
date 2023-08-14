@@ -1,24 +1,64 @@
-import logo from './logo.svg';
-import './App.css';
+import { Provider } from "react-redux";
+import "./App.css";
+import Body from "./components/Body";
+import store from "./utils/store";
+import { RouterProvider, createBrowserRouter } from "react-router-dom";
+import WatchPage from "./components/WatchPage";
+import MainContainer from "./components/MainContainer";
+import Demo from "./components/Demo";
+import SearchVideos from "./components/SearchVideos";
+import { lazy, Suspense } from "react";
+import ErrorPage from "./components/ErrorPage";
+
+const CategoryVideos = lazy(() => import("./components/CategoryVideos"));
+
+const appRouter = createBrowserRouter([
+  {
+    path: "/",
+    element: <Body />,
+    errorElement: <ErrorPage />,
+    children: [
+      {
+        path: "/",
+        element: <MainContainer />,
+      },
+      {
+        path: "watch",
+        element: <WatchPage />,
+      },
+      {
+        path: "results",
+        element: <SearchVideos />,
+      },
+      {
+        path: "category",
+        element: (
+          <Suspense
+            fallback={
+              <div className="flex items-center justify-center h-full">
+                Loading...
+              </div>
+            }
+          >
+            <CategoryVideos />
+          </Suspense>
+        ),
+      },
+      {
+        path: "demo",
+        element: <Demo />,
+      },
+    ],
+  },
+]);
 
 function App() {
   return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
-    </div>
+    <Provider store={store}>
+      <div>
+        <RouterProvider router={appRouter} />
+      </div>
+    </Provider>
   );
 }
 
