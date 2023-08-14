@@ -1,4 +1,4 @@
-const API_KEY = "AIzaSyD8-4RXiAYdopRyEhXz8ck9JeBK8MFHwk0";
+const API_KEY = process.env.REACT_APP_API_KEY;
 // const API_KEY = "AIzaSyCevPjEoxKnwuvxmD54zMM54tKB-b_41u8";
 // const API_KEY = "AIzaSyB0e1izvenBch4JkJUeYSKDlJko5CfOOdA";
 // const API_KEY = "AIzaSyDjPGw4P7UUF5t1vKh78mCTV4L4VlXYUyc";
